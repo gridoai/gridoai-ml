@@ -1,11 +1,22 @@
-from context_handler.model import word2vec
-import os
+from fastapi import FastAPI
+from context_handler.models import doc2vec
+from pydantic import BaseModel
+from uuid import UUID
 
-def main() -> None:
-    use_mocked_model = os.environ.get("USE_MOCKED_MODEL", "FALSE") == "TRUE"
-    print(f"Using mocked model: {use_mocked_model}")
-    model = word2vec.load_model(use_mocked_model)
-    vec = model["cat"]
-    print(vec)
+app = FastAPI()
 
-main()
+class Document(BaseModel):
+    id: UUID
+    text: str
+
+@app.post("/write/")
+async def write(document: Document):
+    text = document.text
+    vec = doc2vec.calc(text)
+    return {"message": vec}
+
+
+@app.get("/neardocs/")
+async def neardocs(text: str):
+    vec = doc2vec.calc(text)
+    return {"message": vec}
