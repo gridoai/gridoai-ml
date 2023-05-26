@@ -11,3 +11,7 @@ class AbsDatabase(metaclass=ABCMeta):
     @abstractmethod
     def get_near_vecs(self, vec: t.List[float], k: int) -> t.List[t.Tuple[UUID, float]]:
         pass
+
+    @abstractmethod
+    def delete_doc(self, uid: UUID) -> None:
+        pass

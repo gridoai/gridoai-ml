@@ -48,3 +48,6 @@ class MilvusDatabase(AbsDatabase):
             consistency_level="Strong",
         )
         return [(UUID(str(result.id)), result.distance) for result in results[0]]
+
+    def delete_doc(self, uid: UUID) -> None:
+        self.collection.delete(f"uid in ['{str(uid)}']")

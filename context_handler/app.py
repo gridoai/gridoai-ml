@@ -5,6 +5,8 @@ from fastapi import FastAPI
 from context_handler.models import doc2vec
 from context_handler.entities import Document
 from context_handler.db import database
+from uuid import UUID
+
 
 app = FastAPI()
 
@@ -19,6 +21,12 @@ async def write(document: Document):
         return {"message": usable_vec}
     else:
         return {"message": "error"}
+
+
+@app.get("/delete/")
+async def delete(uid: UUID):
+    print(f"Received uid: {uid}")
+    database.delete_doc(uid)
 
 
 @app.get("/neardocs/")
