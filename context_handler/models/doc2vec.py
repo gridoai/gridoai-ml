@@ -3,7 +3,7 @@ import numpy as np
 from context_handler.models import word2vec
 
 
-def calc(text: str) -> t.Optional[np.ndarray[t.Any, np.dtype[np.floating]]]:
+def calc(text: str) -> t.Optional[np.ndarray]:
     """
     Calculate related vector for each word using word2vec and take the average.
     """
