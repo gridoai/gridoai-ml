@@ -162,3 +162,5 @@ cython_debug/
 # model related
 *.model
 *.npy
+
+volumes
