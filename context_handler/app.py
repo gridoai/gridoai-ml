@@ -14,8 +14,9 @@ async def write(document: Document):
     print(f"Received document: {document}")
     vec = doc2vec.calc(document.text)
     if vec is not None:
-        database.write_vec(document.uid, vec.tolist())
-        return {"message": vec}
+        usable_vec = vec.tolist()
+        database.write_vec(document.uid, usable_vec)
+        return {"message": usable_vec}
     else:
         return {"message": "error"}
 

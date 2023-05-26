@@ -30,21 +30,21 @@ class MilvusDatabase(AbsDatabase):
             "params": {"nlist": 1024},
         }
         self.collection = Collection(name="documents", schema=schema)
+        self.collection.release()
         self.collection.create_index(field_name="vec", index_params=index_params)
+        self.collection.load()
 
     def write_vec(self, uid: UUID, vec: t.List[float]) -> None:
-        self.collection.insert([{"uid": str(uid), "vec": vec}])
+        self.collection.insert([[str(uid)], [vec]])
 
     def get_near_vecs(self, vec: t.List[float], k: int) -> t.List[t.Tuple[UUID, float]]:
-        self.collection.load()
         search_params = {"metric_type": "L2", "params": {"nprobe": 10}}
         results = self.collection.search(
-            data=vec,
+            data=[vec],
             anns_field="vec",
-            params=search_params,
+            param=search_params,
             limit=k,
             output_fields=["uid"],
             consistency_level="Strong",
         )
-        print(results)
-        return [(UUID(str(result[0])), result[1]) for result in results]
+        return [(UUID(str(result.id)), result.distance) for result in results[0]]

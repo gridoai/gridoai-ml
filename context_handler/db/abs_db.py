@@ -5,7 +5,7 @@ from uuid import UUID
 
 class AbsDatabase(metaclass=ABCMeta):
     @abstractmethod
-    def write_vec(self, id: UUID, vec: t.List[float]) -> None:
+    def write_vec(self, uid: UUID, vec: t.List[float]) -> None:
         pass
 
     @abstractmethod
