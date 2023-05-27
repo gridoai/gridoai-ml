@@ -1,4 +1,4 @@
-from gensim.models.word2vec import Word2Vec
+from gensim.models.keyedvectors import KeyedVectors
 import json
 import os
 import typing as t
@@ -9,8 +9,7 @@ print(f"Using mocked model: {USE_MOCKED_MODEL}")
 
 
 def load_model() -> t.Dict[str, np.ndarray]:
-    m = Word2Vec.load("word2vec-google-news-300.model")
-    return m.wv
+    return KeyedVectors.load("word2vec-google-news-300.model")
 
 
 def load_mocked_model() -> t.Dict[str, np.ndarray]:
