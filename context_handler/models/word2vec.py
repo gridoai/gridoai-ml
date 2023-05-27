@@ -9,7 +9,8 @@ print(f"Using mocked model: {USE_MOCKED_MODEL}")
 
 
 def load_model() -> t.Dict[str, np.ndarray]:
-    return Word2Vec.load("word2vec-google-news-300.model").wv
+    m = Word2Vec.load("word2vec-google-news-300.model")
+    return m.wv
 
 
 def load_mocked_model() -> t.Dict[str, np.ndarray]:
