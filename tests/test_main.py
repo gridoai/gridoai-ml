@@ -2,7 +2,7 @@ import requests
 import uuid
 
 
-def test_write_neardocs_and_delete(server: None) -> None:
+def test_write_neardocs_and_delete() -> None:
     uid = uuid.uuid4()
     r1 = requests.post(
         "http://127.0.0.1:8000/write", json={"uid": str(uid), "text": "cat"}
