@@ -120,6 +120,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+.dev.yaml
 .env
 .venv
 env/
@@ -164,3 +165,5 @@ cython_debug/
 *.npy
 
 volumes
+
+requirements.txt
