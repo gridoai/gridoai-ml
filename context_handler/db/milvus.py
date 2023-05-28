@@ -2,18 +2,19 @@ import typing as t
 from uuid import UUID
 from pymilvus import connections
 from context_handler.db.abs_db import AbsDatabase
+from context_handler.entities import DatabaseCredentials
 import typing as t
 from pymilvus import CollectionSchema, FieldSchema, DataType, Collection
 
 
 class MilvusDatabase(AbsDatabase):
-    def __init__(self) -> None:
+    def __init__(self, database_credentials: DatabaseCredentials) -> None:
         connections.connect(
             alias="default",
-            user="username",
-            password="password",
-            host="localhost",
-            port="19530",
+            user=database_credentials.username,
+            password=database_credentials.password,
+            host=database_credentials.host,
+            port=database_credentials.port,
         )
         schema = CollectionSchema(
             fields=[

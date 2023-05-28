@@ -1,9 +1,14 @@
 from abc import ABCMeta, abstractmethod
 import typing as t
 from uuid import UUID
+from context_handler.entities import DatabaseCredentials
 
 
 class AbsDatabase(metaclass=ABCMeta):
+    @abstractmethod
+    def __init__(self, credentials: DatabaseCredentials):
+        pass
+
     @abstractmethod
     def write_vec(self, uid: UUID, vec: t.List[float]) -> None:
         pass
