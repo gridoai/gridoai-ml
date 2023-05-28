@@ -1,20 +1,20 @@
-from dotenv import load_dotenv
-
-load_dotenv()
+from context_handler.setup import setup_data
 from fastapi import FastAPI
-from context_handler.models import doc2vec
+from context_handler.models.doc2vec import Doc2Vec
 from context_handler.entities import Document
-from context_handler.db import database
+from context_handler.db import get_database
 from uuid import UUID
 
 
 app = FastAPI()
+model = Doc2Vec(setup_data.use_mocked_model)
+database = get_database(setup_data)
 
 
-@app.post("/write/")
+@app.post("/write")
 async def write(document: Document):
     print(f"Received document: {document}")
-    vec = doc2vec.calc(document.text)
+    vec = model.calc(document.text)
     if vec is not None:
         usable_vec = vec.tolist()
         database.write_vec(document.uid, usable_vec)
@@ -23,16 +23,16 @@ async def write(document: Document):
         return {"message": "error"}
 
 
-@app.get("/delete/")
+@app.get("/delete")
 async def delete(uid: UUID):
     print(f"Received uid: {uid}")
     database.delete_doc(uid)
 
 
-@app.get("/neardocs/")
+@app.get("/neardocs")
 async def neardocs(text: str):
     print(f"Received text: {text}")
-    vec = doc2vec.calc(text)
+    vec = model.calc(text)
     if vec is not None:
         uids = database.get_near_vecs(vec.tolist(), 10)
         return {"message": uids}
