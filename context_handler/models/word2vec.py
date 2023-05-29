@@ -8,7 +8,6 @@ import os
 
 class Word2Vec:
     def __init__(self, use_mocked_model: bool) -> None:
-        print(f"Using mocked model: {use_mocked_model}")
         self.model = (
             Word2Vec.load_model()
             if not use_mocked_model
