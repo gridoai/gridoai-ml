@@ -17,6 +17,7 @@ build:
 	docker build -t dev_$(APP_NAME) .
 
 gcloud-build:
+	poetry export --without-hashes --format=requirements.txt > requirements.txt
 	gcloud builds submit --region=us-west2 --tag us-west2-docker.pkg.dev/$(PROJECT_ID)/docker-repo/$(APP_NAME)
 
 gcloud-run:
@@ -28,4 +29,3 @@ gcloud-run:
 	--platform managed \
 	--region us-west1 \
 	--allow-unauthenticated
-	

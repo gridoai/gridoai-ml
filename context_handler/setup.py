@@ -2,6 +2,7 @@ from context_handler.utils import _raise
 from context_handler.entities import DatabaseCredentials, SetupData
 from dotenv import load_dotenv
 import os
+import typing as t
 
 CODE_ENV = os.environ.get("CODE_ENV") or "LOCAL"
 load_dotenv()
@@ -16,10 +17,18 @@ def get_env(var: str) -> str:
         return os.environ.get(f"PRD_{var}") or _raise(f"{var} env var should be set")
 
 
+def get_optional_env(var: str) -> t.Optional[str]:
+    if CODE_ENV == "LOCAL":
+        return os.environ.get(var)
+    elif CODE_ENV == "DEV":
+        return os.environ.get(f"DEV_{var}")
+    else:
+        return os.environ.get(f"PRD_{var}")
+
+
 USE_MOCKED_MODEL = get_env("USE_MOCKED_MODEL")
 DATABASE_TYPE = get_env("DATABASE_TYPE")
-DB_HOST = get_env("DB_HOST")
-DB_PORT = get_env("DB_PORT")
+DB_URI = get_env("DB_URI")
 DB_USER = get_env("DB_USER")
 DB_PASS = get_env("DB_PASS")
 
@@ -27,7 +36,9 @@ setup_data = SetupData(
     database_type=DATABASE_TYPE,
     use_mocked_model=USE_MOCKED_MODEL == "TRUE",
     database_credentials=DatabaseCredentials(
-        host=DB_HOST, port=int(DB_PORT), username=DB_USER, password=DB_PASS
+        uri=DB_URI,
+        username=DB_USER,
+        password=DB_PASS,
     ),
 )
 
