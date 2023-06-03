@@ -13,8 +13,8 @@ class MilvusDatabase(AbsDatabase):
             alias="default",
             user=database_credentials.username,
             password=database_credentials.password,
-            host=database_credentials.host,
-            port=database_credentials.port,
+            timeout=30,
+            uri=database_credentials.uri,
         )
         schema = CollectionSchema(
             fields=[
@@ -27,7 +27,7 @@ class MilvusDatabase(AbsDatabase):
         )
         index_params = {
             "metric_type": "L2",
-            "index_type": "IVF_FLAT",
+            "index_type": "AUTOINDEX",
             "params": {"nlist": 1024},
         }
         self.collection = Collection(name="documents", schema=schema)

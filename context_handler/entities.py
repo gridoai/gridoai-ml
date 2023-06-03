@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from uuid import UUID
+import typing as t
 
 
 class Document(BaseModel):
@@ -8,8 +9,7 @@ class Document(BaseModel):
 
 
 class DatabaseCredentials(BaseModel):
-    host: str
-    port: int
+    uri: str
     username: str
     password: str
 
