@@ -167,3 +167,4 @@ cython_debug/
 volumes
 
 requirements.txt
+.DS_Store

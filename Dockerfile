@@ -13,5 +13,6 @@ RUN poetry export --without-hashes --format=requirements.txt > requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 RUN --mount=type=secret,id=.env,mode=0444,required=true \
  cp /run/secrets/.env .env
+RUN cat .ENV
 # As an example here we're running the web service with one worker on uvicorn.
 CMD exec uvicorn context_handler.app:app --host 0.0.0.0 --port ${PORT} --workers 1
