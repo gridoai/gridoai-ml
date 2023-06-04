@@ -24,7 +24,7 @@ class Word2Vec:
         if filename in os.listdir():
             return KeyedVectors.load(filename)
         path = f"/tmp/{filename}"
-        bucket = storage.Client().get_bucket("grido-ml-models")
+        bucket = storage_client.get_bucket("grido-ml-models")
         blob_model = bucket.blob(f"{filename}")
         blob_vectors = bucket.blob(f"{filename}.vectors.npy")
         blob_model.download_to_filename(path)

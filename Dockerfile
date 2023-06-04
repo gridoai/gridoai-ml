@@ -15,6 +15,4 @@ RUN poetry export --without-hashes --format=requirements.txt > requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Use the start script as the command
-CMD echo $GCP_KEY > /tmp/service-account-file.json && \
-    export GOOGLE_APPLICATION_CREDENTIALS=/tmp/service-account-file.json && \
-    uvicorn context_handler.app:app --host 0.0.0.0 --port ${PORT} --workers 1
+CMD uvicorn context_handler.app:app --host 0.0.0.0 --port ${PORT} --workers 1
