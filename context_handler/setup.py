@@ -7,10 +7,6 @@ import typing as t
 CODE_ENV = os.environ.get("CODE_ENV") or "LOCAL"
 load_dotenv()
 
-with open("/tmp/service-account-file.json") as f:
-    s = f.read().strip()
-    print(f" s: { s}")
-    
 def get_env(var: str) -> str:
     if CODE_ENV == "LOCAL":
         return os.environ.get(var) or _raise(f"{var} env var should be set")

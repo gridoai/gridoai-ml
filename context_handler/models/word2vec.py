@@ -5,6 +5,10 @@ import numpy as np
 from google.cloud import storage
 import os
 
+service_account_info = json.loads(os.environ['GCP_KEY'])
+
+# Create the storage client with the service account info
+storage_client = storage.Client.from_service_account_info(service_account_info)
 
 class Word2Vec:
     def __init__(self, use_mocked_model: bool) -> None:
