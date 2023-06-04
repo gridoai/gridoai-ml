@@ -6,6 +6,8 @@ colorTo: blue
 sdk: docker
 pinned: false
 license: cc
+colorTo: blue
+app_file: main.py
 ---
 # Context Handler
 
