@@ -1,3 +1,12 @@
+---
+title: Gridoai
+emoji: 🐠
+colorFrom: yellow
+colorTo: blue
+sdk: docker
+pinned: false
+license: cc
+---
 # Context Handler
 
 Gets subject from text embedding to provide context.
