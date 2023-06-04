@@ -1,6 +1,6 @@
-from context_handler.db.abs_db import AbsDatabase
-from context_handler.db.milvus import MilvusDatabase
-from context_handler.entities import SetupData
+from gridoai_ml.db.abs_db import AbsDatabase
+from gridoai_ml.db.milvus import MilvusDatabase
+from gridoai_ml.entities import SetupData
 import typing as t
 
 DATABASES: t.Dict[str, t.Type[AbsDatabase]] = {"milvus": MilvusDatabase}

@@ -1,8 +1,8 @@
-from context_handler.setup import setup_data
+from gridoai_ml.setup import setup_data
 from fastapi import FastAPI
-from context_handler.models.doc2vec import Doc2Vec
-from context_handler.entities import Document
-from context_handler.db import get_database
+from gridoai_ml.models.doc2vec import Doc2Vec
+from gridoai_ml.entities import Document
+from gridoai_ml.db import get_database
 from uuid import UUID
 
 

@@ -1,8 +1,8 @@
 include .env
 
 PROJECT_ID:=lucid-arch-387422
-APP_NAME:=context_handler
-APP_NAME_WITH_HYPHEN:=context-handler
+APP_NAME:=gridoai_ml
+APP_NAME_WITH_HYPHEN:=gridoai-ml
 MEMORY:=16G
 CPU:=4
 

@@ -1,8 +1,8 @@
 import typing as t
 from uuid import UUID
 from pymilvus import connections
-from context_handler.db.abs_db import AbsDatabase
-from context_handler.entities import DatabaseCredentials
+from gridoai_ml.db.abs_db import AbsDatabase
+from gridoai_ml.entities import DatabaseCredentials
 import typing as t
 from pymilvus import CollectionSchema, FieldSchema, DataType, Collection
 

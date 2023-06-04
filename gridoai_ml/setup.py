@@ -1,5 +1,5 @@
-from context_handler.utils import _raise
-from context_handler.entities import DatabaseCredentials, SetupData
+from gridoai_ml.utils import _raise
+from gridoai_ml.entities import DatabaseCredentials, SetupData
 from dotenv import load_dotenv
 import os
 import typing as t
