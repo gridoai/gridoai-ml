@@ -5,10 +5,11 @@ ENV PYTHONUNBUFFERED True
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 
-COPY . ./
-
 RUN --mount=type=secret,id=.env,mode=0444,required=true \
  cp /run/secrets/.env .env
+ 
+COPY . ./
+
 RUN ls -la
 RUN ls -la /run/secrets
 COPY ./.env ./.env
