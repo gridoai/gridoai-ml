@@ -14,9 +14,6 @@ RUN pip install poetry
 RUN poetry export --without-hashes --format=requirements.txt > requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the start script
-COPY start.sh start.sh
-
 # Use the start script as the command
 CMD echo $GCP_KEY > /tmp/service-account-file.json && \
     export GOOGLE_APPLICATION_CREDENTIALS=/tmp/service-account-file.json && \

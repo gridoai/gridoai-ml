@@ -7,7 +7,8 @@ import typing as t
 CODE_ENV = os.environ.get("CODE_ENV") or "LOCAL"
 load_dotenv()
 
-
+for name, value in os.environ.items():
+    print("{0}: {1}".format(name, value))
 def get_env(var: str) -> str:
     if CODE_ENV == "LOCAL":
         return os.environ.get(var) or _raise(f"{var} env var should be set")
