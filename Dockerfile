@@ -7,7 +7,7 @@ WORKDIR $APP_HOME
 COPY . ./
 
 ENV CODE_ENV DEV
-ENV PORT 8080
+ENV PORT 7860
 
 RUN pip install --no-cache-dir -r requirements.txt
 
