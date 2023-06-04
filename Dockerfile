@@ -1,14 +1,15 @@
 FROM python:3.10-slim
-RUN --mount=type=secret,id=.env,mode=0444,required=true \
- cp /run/secrets/.env .env
-RUN cat .env
-COPY .env .env
 
 ENV PYTHONUNBUFFERED True
 
 ENV APP_HOME /app
 WORKDIR $APP_HOME
 COPY . ./
+RUN --mount=type=secret,id=.env,mode=0444,required=true \
+ cp /run/secrets/.env .env
+RUN ls -la
+RUN ls -la /run/secrets
+COPY .env .env
 
 ENV CODE_ENV DEV
 ENV PORT 7860
