@@ -14,5 +14,9 @@ ENV PORT 7860
 RUN pip install poetry
 RUN poetry export --without-hashes --format=requirements.txt > requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-# As an example here we're running the web service with one worker on uvicorn.
-CMD exec uvicorn context_handler.app:app --host 0.0.0.0 --port ${PORT} --workers 1
+
+# Copy the start script
+COPY start.sh start.sh
+
+# Use the start script as the command
+CMD ["./start.sh"]
