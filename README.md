@@ -2,7 +2,6 @@
 title: Gridoai
 emoji: 🐠
 colorFrom: yellow
-colorTo: blue
 sdk: docker
 pinned: false
 license: cc
