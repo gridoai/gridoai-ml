@@ -1,6 +1,6 @@
-# Context Handler
+# GridoAI ML
 
-Gets subject from text embedding to provide context.
+This is a repository to add everything related to ML, which is better to do using Python. For now, it gets subject from text embedding to provide context.
 
 ## Description
 

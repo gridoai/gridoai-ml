@@ -1,7 +1,7 @@
 from abc import ABCMeta, abstractmethod
 import typing as t
 from uuid import UUID
-from context_handler.entities import DatabaseCredentials
+from gridoai_ml.entities import DatabaseCredentials
 
 
 class AbsDatabase(metaclass=ABCMeta):

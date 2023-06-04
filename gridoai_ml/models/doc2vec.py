@@ -1,6 +1,6 @@
 import typing as t
 import numpy as np
-from context_handler.models.word2vec import Word2Vec
+from gridoai_ml.models.word2vec import Word2Vec
 
 
 class Doc2Vec:
