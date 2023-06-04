@@ -8,7 +8,7 @@ COPY . ./
 
 ENV CODE_ENV DEV
 ENV PORT 7860
-RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN pip install poetry
 RUN poetry export --without-hashes --format=requirements.txt > requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 RUN --mount=type=secret,id=.env,mode=0444,required=true \
