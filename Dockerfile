@@ -2,6 +2,7 @@ FROM python:3.10-slim
 RUN --mount=type=secret,id=.env,mode=0444,required=true \
  cp /run/secrets/.env .env
 RUN cat .env
+COPY .env .env
 
 ENV PYTHONUNBUFFERED True
 
