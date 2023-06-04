@@ -7,7 +7,7 @@ WORKDIR $APP_HOME
 
 RUN --mount=type=secret,id=.env,mode=0444,required=true \
  cp /run/secrets/.env .env
- 
+
 COPY . ./
 
 RUN ls -la
@@ -24,4 +24,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY start.sh start.sh
 
 # Use the start script as the command
-CMD ["./start.sh"]
+CMD echo $GCP_KEY > /app/service-account-file.json && \
+    export GOOGLE_APPLICATION_CREDENTIALS=/app/service-account-file.json && \
+    exec uvicorn context_handler.app:app --host 0.0.0.0 --port ${PORT} --workers 1
