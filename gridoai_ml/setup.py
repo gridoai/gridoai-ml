@@ -26,7 +26,7 @@ def get_optional_env(var: str) -> t.Optional[str]:
         return os.environ.get(f"PRD_{var}")
 
 
-USE_MOCKED_MODEL = get_env("USE_MOCKED_MODEL")
+EMBEDDING_MODEL = get_env("EMBEDDING_MODEL")
 DATABASE_TYPE = get_env("DATABASE_TYPE")
 DB_URI = get_env("DB_URI")
 DB_USER = get_env("DB_USER")
@@ -34,7 +34,7 @@ DB_PASS = get_env("DB_PASS")
 
 setup_data = SetupData(
     database_type=DATABASE_TYPE,
-    use_mocked_model=USE_MOCKED_MODEL == "TRUE",
+    embedding_model=EMBEDDING_MODEL,
     database_credentials=DatabaseCredentials(
         uri=DB_URI,
         username=DB_USER,
@@ -44,4 +44,4 @@ setup_data = SetupData(
 
 print(f"code_env: {CODE_ENV}")
 print(f"database_type: {setup_data.database_type}")
-print(f"use_mocked_model: {setup_data.use_mocked_model}")
+print(f"embedding_model: {setup_data.embedding_model}")

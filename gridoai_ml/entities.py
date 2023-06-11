@@ -15,6 +15,6 @@ class DatabaseCredentials(BaseModel):
 
 
 class SetupData(BaseModel):
-    use_mocked_model: bool
+    embedding_model: str
     database_type: str
     database_credentials: DatabaseCredentials

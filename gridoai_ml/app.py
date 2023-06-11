@@ -1,13 +1,13 @@
 from gridoai_ml.setup import setup_data
 from fastapi import FastAPI
-from gridoai_ml.models.doc2vec import Doc2Vec
+from gridoai_ml.text_embedding_models import get_model
 from gridoai_ml.entities import Document
 from gridoai_ml.db import get_database
 from uuid import UUID
 
 
 app = FastAPI()
-model = Doc2Vec(setup_data.use_mocked_model)
+model = get_model(setup_data)
 database = get_database(setup_data)
 
 
