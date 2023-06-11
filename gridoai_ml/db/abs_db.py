@@ -6,7 +6,7 @@ from gridoai_ml.entities import DatabaseCredentials
 
 class AbsDatabase(metaclass=ABCMeta):
     @abstractmethod
-    def __init__(self, credentials: DatabaseCredentials):
+    def __init__(self, credentials: DatabaseCredentials, model_dim: int):
         pass
 
     @abstractmethod

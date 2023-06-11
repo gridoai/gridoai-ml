@@ -8,7 +8,7 @@ from uuid import UUID
 
 app = FastAPI()
 model = get_model(setup_data)
-database = get_database(setup_data)
+database = get_database(setup_data, model.dim)
 
 
 @app.post("/write")
