@@ -6,5 +6,7 @@ import typing as t
 DATABASES: t.Dict[str, t.Type[AbsDatabase]] = {"milvus": MilvusDatabase}
 
 
-def get_database(setup_data: SetupData) -> AbsDatabase:
-    return DATABASES[setup_data.database_type](setup_data.database_credentials)
+def get_database(setup_data: SetupData, model_dim: int) -> AbsDatabase:
+    return DATABASES[setup_data.database_type](
+        setup_data.database_credentials, model_dim
+    )

@@ -15,4 +15,4 @@ class InstructorModel(AbsTextEmbeddingModel):
 
     def calc(self, text: str) -> t.Optional[np.ndarray]:
         embeddings = self.model.encode([[self.instruction, text]])
-        return embeddings
+        return embeddings[0]

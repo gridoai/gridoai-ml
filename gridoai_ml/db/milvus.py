@@ -8,7 +8,9 @@ from pymilvus import CollectionSchema, FieldSchema, DataType, Collection
 
 
 class MilvusDatabase(AbsDatabase):
-    def __init__(self, database_credentials: DatabaseCredentials) -> None:
+    def __init__(
+        self, database_credentials: DatabaseCredentials, model_dim: int
+    ) -> None:
         connections.connect(
             alias="default",
             user=database_credentials.username,
@@ -21,7 +23,7 @@ class MilvusDatabase(AbsDatabase):
                 FieldSchema(
                     name="uid", dtype=DataType.VARCHAR, max_length=255, is_primary=True
                 ),
-                FieldSchema(name="vec", dtype=DataType.FLOAT_VECTOR, dim=300),
+                FieldSchema(name="vec", dtype=DataType.FLOAT_VECTOR, dim=model_dim),
             ],
             description="document vector space",
         )
