@@ -6,7 +6,7 @@ import numpy as np
 
 class InstructorModel(AbsTextEmbeddingModel):
     def __init__(self) -> None:
-        self.model = INSTRUCTOR("hkunlp/instructor-xl")
+        self.model = INSTRUCTOR("hkunlp/instructor-large")
         self.instruction = "Represent the document:"
 
     @property
