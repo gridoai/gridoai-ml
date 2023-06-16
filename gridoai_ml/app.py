@@ -4,6 +4,7 @@ from gridoai_ml.text_embedding_models import get_model
 from gridoai_ml.entities import Document
 from gridoai_ml.db import get_database
 from uuid import UUID
+import typing as t
 
 
 app = FastAPI()
@@ -14,10 +15,10 @@ database = get_database(setup_data, model.dim)
 @app.post("/write")
 async def write(document: Document):
     print(f"Received document: {document}")
-    vec = model.calc(document.text)
+    vec = model.calc(document.content)
     if vec is not None:
-        usable_vec = vec.tolist()
-        database.write_vec(document.uid, usable_vec)
+        usable_vec: t.List[float] = vec.tolist()
+        database.write_vec(document, usable_vec)
         return {"message": usable_vec}
     else:
         return {"message": "error"}
@@ -34,7 +35,7 @@ async def neardocs(text: str):
     print(f"Received text: {text}")
     vec = model.calc(text)
     if vec is not None:
-        uids = database.get_near_vecs(vec.tolist(), 10)
-        return {"message": uids}
+        docs = database.get_near_vecs(vec.tolist(), 10)
+        return {"message": docs}
     else:
         return {"message": "error"}

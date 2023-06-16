@@ -5,7 +5,12 @@ import typing as t
 
 class Document(BaseModel):
     uid: UUID
-    text: str
+    path: str
+    content: str
+
+
+class DocumentWithDistance(Document):
+    distance: float
 
 
 class DatabaseCredentials(BaseModel):

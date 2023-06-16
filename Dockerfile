@@ -8,9 +8,7 @@ COPY . ./
 
 ENV CODE_ENV DEV
 ENV PORT 8080
-ENV SENTENCE_TRANSFORMERS_HOME /app/.cache/
-
-COPY hkunlp_instructor-large/ /app/.cache/
+ENV SENTENCE_TRANSFORMERS_HOME ./.cache/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
