@@ -26,7 +26,7 @@ gcloud-run:
 	--image us-west2-docker.pkg.dev/$(PROJECT_ID)/docker-repo/$(APP_NAME) \
 	--cpu $(CPU) \
 	--memory $(MEMORY) \
-	--max-instances 1 \
+	--min-instances 1 \
 	--platform managed \
 	--region us-west1 \
 	--allow-unauthenticated
