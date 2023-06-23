@@ -21,5 +21,5 @@ class DatabaseCredentials(BaseModel):
 
 class SetupData(BaseModel):
     embedding_model: str
-    database_type: str
-    database_credentials: DatabaseCredentials
+    database_type: t.Optional[str]
+    database_credentials: t.Optional[DatabaseCredentials]
