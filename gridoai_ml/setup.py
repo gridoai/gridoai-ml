@@ -27,15 +27,17 @@ def get_optional_env(var: str) -> t.Optional[str]:
 
 
 EMBEDDING_MODEL = get_env("EMBEDDING_MODEL")
-DATABASE_TYPE = get_env("DATABASE_TYPE")
-DB_URI = get_env("DB_URI")
-DB_USER = get_env("DB_USER")
-DB_PASS = get_env("DB_PASS")
+DATABASE_TYPE = get_optional_env("DATABASE_TYPE")
+DB_URI = get_optional_env("DB_URI")
+DB_USER = get_optional_env("DB_USER")
+DB_PASS = get_optional_env("DB_PASS")
 
 setup_data = SetupData(
     database_type=DATABASE_TYPE,
     embedding_model=EMBEDDING_MODEL,
-    database_credentials=DatabaseCredentials(
+    database_credentials=None
+    if (DB_URI is None or DB_USER is None or DB_PASS is None or DATABASE_TYPE is None)
+    else DatabaseCredentials(
         uri=DB_URI,
         username=DB_USER,
         password=DB_PASS,
