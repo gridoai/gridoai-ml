@@ -1,7 +1,7 @@
 from gridoai_ml.setup import setup_data
 from fastapi import FastAPI
 from gridoai_ml.text_embedding_models import get_model
-from gridoai_ml.entities import Document
+from gridoai_ml.entities import Document, EmbeddingPayload
 from gridoai_ml.db import get_database
 from uuid import UUID
 import typing as t
@@ -46,9 +46,9 @@ async def neardocs(text: str):
     else:
         return {"message": "error"}
 
-@app.get("/embed")
-async def embed(text: str):
-    vec = model.calc(text)
+@app.post("/embed")
+async def embed(payload: EmbeddingPayload):
+    vec = model.calc(payload.text)
     if vec is not None:
         return {"message": vec.tolist()}
     else:

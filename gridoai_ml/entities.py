@@ -8,6 +8,8 @@ class Document(BaseModel):
     path: str
     content: str
 
+class EmbeddingPayload(BaseModel):
+    text:  str
 
 class DocumentWithDistance(Document):
     distance: float
