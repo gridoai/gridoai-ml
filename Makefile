@@ -22,10 +22,10 @@ gcloud-build:
 	--tag us-west2-docker.pkg.dev/$(PROJECT_ID)/docker-repo/$(APP_NAME)
 
 gcloud-run:
-	gcloud run deploy dev-$(APP_NAME_WITH_HYPHEN) \
+	gcloud run deploy dev-$(APP_NAME_WITH_HYPHEN)-br \
 	--image us-west2-docker.pkg.dev/$(PROJECT_ID)/docker-repo/$(APP_NAME) \
 	--cpu $(CPU) \
 	--memory $(MEMORY) \
 	--platform managed \
-	--region us-west1 \
+	--region southamerica-east1 \
 	--allow-unauthenticated
