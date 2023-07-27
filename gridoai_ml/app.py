@@ -46,10 +46,12 @@ async def neardocs(text: str):
     else:
         return {"message": "error"}
 
+
 @app.post("/embed")
 async def embed(payload: EmbeddingPayload):
-    vec = model.calc(payload.text)
-    if vec is not None:
-        return {"message": vec.tolist()}
-    else:
+    vecs = [model.calc(text) for text in payload.texts]
+    not_none_vecs = [vec for vec in vecs if vec is not None]
+    if len(not_none_vecs) < len(vecs):
         return {"message": "error"}
+    else:
+        return {"message": [vec.tolist() for vec in not_none_vecs]}
