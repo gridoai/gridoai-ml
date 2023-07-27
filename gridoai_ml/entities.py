@@ -8,8 +8,10 @@ class Document(BaseModel):
     path: str
     content: str
 
+
 class EmbeddingPayload(BaseModel):
-    text:  str
+    texts: t.List[str]
+
 
 class DocumentWithDistance(Document):
     distance: float
