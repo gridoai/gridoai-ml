@@ -15,6 +15,6 @@ class AbsTextEmbeddingModel(metaclass=ABCMeta):
 
     @abstractmethod
     def calc(
-        self, text: str, instruction: t.Optional[str] = None
-    ) -> t.Optional[np.ndarray]:
+        self, texts: t.List[str], instruction: t.Optional[str] = None
+    ) -> t.List[np.ndarray]:
         pass

@@ -14,8 +14,10 @@ class MultilingualE5BaseModel(AbsTextEmbeddingModel):
         return 768
 
     def calc(
-        self, text: str, instruction: t.Optional[str] = None
-    ) -> t.Optional[np.ndarray]:
+        self, texts: t.List[str], instruction: t.Optional[str] = None
+    ) -> t.List[np.ndarray]:
         current_instruction = instruction or self.instruction
-        embeddings = self.model.encode([f"{current_instruction}: {text}"])
-        return embeddings[0]
+        embeddings = self.model.encode(
+            [f"{current_instruction}: {text}" for text in texts]
+        )
+        return embeddings

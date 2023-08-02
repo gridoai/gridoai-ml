@@ -14,7 +14,9 @@ class InstructorModel(AbsTextEmbeddingModel):
         return 768
 
     def calc(
-        self, text: str, instruction: t.Optional[str] = None
-    ) -> t.Optional[np.ndarray]:
-        embeddings = self.model.encode([[instruction or self.instruction, text]])
+        self, texts: t.List[str], instruction: t.Optional[str] = None
+    ) -> t.List[np.ndarray]:
+        embeddings = self.model.encode(
+            [[instruction or self.instruction, text] for text in texts]
+        )
         return embeddings[0]

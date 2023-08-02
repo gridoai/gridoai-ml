@@ -29,13 +29,16 @@ class Doc2Vec(AbsTextEmbeddingModel):
         return KeyedVectors.load(path)
 
     def calc(
-        self, text: str, instruction: t.Optional[str] = None
-    ) -> t.Optional[np.ndarray]:
+        self, texts: t.List[str], instruction: t.Optional[str] = None
+    ) -> t.List[np.ndarray]:
+        return [self.calc_one(text, instruction) for text in texts]
+
+    def calc_one(self, text: str, instruction: t.Optional[str] = None) -> np.ndarray:
         """
         Calculate related vector for each word using word2vec and take the average.
         """
         maybe_vecs = [self.word2vec_model.get(word) for word in text.split()]
         vecs = [vec for vec in maybe_vecs if vec is not None]
         if len(vecs) == 0:
-            return None
+            raise Exception("Cannot calculate vec for any word")
         return np.mean(vecs, axis=0)
