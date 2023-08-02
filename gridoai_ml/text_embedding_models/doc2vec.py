@@ -28,7 +28,9 @@ class Doc2Vec(AbsTextEmbeddingModel):
         blob_vectors.download_to_filename(f"{path}.vectors.npy")
         return KeyedVectors.load(path)
 
-    def calc(self, text: str) -> t.Optional[np.ndarray]:
+    def calc(
+        self, text: str, instruction: t.Optional[str] = None
+    ) -> t.Optional[np.ndarray]:
         """
         Calculate related vector for each word using word2vec and take the average.
         """
