@@ -11,6 +11,7 @@ class Document(BaseModel):
 
 class EmbeddingPayload(BaseModel):
     texts: t.List[str]
+    model: str
 
 
 class DocumentWithDistance(Document):

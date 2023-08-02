@@ -49,6 +49,8 @@ async def neardocs(text: str):
 
 @app.post("/embed")
 async def embed(payload: EmbeddingPayload):
+    if payload.model != setup_data.embedding_model:
+        return {"message": "model not available"}
     vecs = [model.calc(text) for text in payload.texts]
     not_none_vecs = [vec for vec in vecs if vec is not None]
     if len(not_none_vecs) < len(vecs):
