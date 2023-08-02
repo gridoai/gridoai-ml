@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from uuid import UUID
 import typing as t
 
@@ -12,6 +12,7 @@ class Document(BaseModel):
 class EmbeddingPayload(BaseModel):
     texts: t.List[str]
     model: str
+    instruction: t.Optional[str] = Field(None)
 
 
 class DocumentWithDistance(Document):

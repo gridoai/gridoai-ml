@@ -12,7 +12,9 @@ class MockedModel(AbsTextEmbeddingModel):
     def dim(self) -> int:
         return 300
 
-    def calc(self, text: str) -> t.Optional[np.ndarray]:
+    def calc(
+        self, text: str, instruction: t.Optional[str] = None
+    ) -> t.Optional[np.ndarray]:
         try:
             return np.array(self.mocked_model[text])
         except:
