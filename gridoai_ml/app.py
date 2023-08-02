@@ -17,7 +17,7 @@ async def write(document: Document):
     if database is None:
         return {"message": "Running without database"}
     print(f"Received document: {document}")
-    vec = model.calc(document.content)
+    vec = model.calc([document.content])[0]
     if vec is not None:
         usable_vec: t.List[float] = vec.tolist()
         database.write_vec(document, usable_vec)
@@ -39,7 +39,7 @@ async def neardocs(text: str):
     if database is None:
         return {"message": "Running without database"}
     print(f"Received text: {text}")
-    vec = model.calc(text)
+    vec = model.calc([text])[0]
     if vec is not None:
         docs = database.get_near_vecs(vec.tolist(), 10)
         return {"message": docs}
@@ -51,9 +51,8 @@ async def neardocs(text: str):
 async def embed(payload: EmbeddingPayload):
     if payload.model != setup_data.embedding_model:
         return {"message": "model not available"}
-    vecs = [model.calc(text, payload.instruction) for text in payload.texts]
-    not_none_vecs = [vec for vec in vecs if vec is not None]
-    if len(not_none_vecs) < len(vecs):
+    try:
+        vecs = model.calc(payload.texts, payload.instruction)
+        return {"message": [vec.tolist() for vec in vecs]}
+    except:
         return {"message": "error"}
-    else:
-        return {"message": [vec.tolist() for vec in not_none_vecs]}
