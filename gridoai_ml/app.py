@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from gridoai_ml.setup import setup_data
 from fastapi import FastAPI
 from gridoai_ml.text_embedding_models import get_model
@@ -34,12 +35,16 @@ async def delete(uid: UUID):
     database.delete_doc(uid)
 
 
-@app.get("/neardocs")
-async def neardocs(text: str):
+class Text(BaseModel):
+    text: str
+
+
+@app.post("/neardocs")
+async def neardocs(text: Text):
     if database is None:
         return {"message": "Running without database"}
-    print(f"Received text: {text}")
-    vec = model.calc([text])[0]
+    print(f"Received text: {text.text}")
+    vec = model.calc([text.text])[0]
     if vec is not None:
         docs = database.get_near_vecs(vec.tolist(), 10)
         return {"message": docs}
