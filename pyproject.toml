@@ -10,7 +10,7 @@ packages = [{include = "gridoai_ml"}]
 python = "^3.8"
 gensim = "^4.3.1"
 fastapi = {extras = ["all"], version = "^0.95.2"}
-uvicorn = {extras = ["standard"], version = "^0.22.0"}
+uvicorn = {extras = ["standard"], version = "^0.23.2"}
 pytest = "^7.3.1"
 pymilvus = "^2.2.8"
 python-dotenv = "^1.0.0"
@@ -24,6 +24,9 @@ torchaudio = {version = "2.0.1+cpu", source = "pytorchcpu"}
 instructorembedding = {version = "^1.0.1", source = "pypi"}
 tqdm = "^4.65.0"
 sentence-transformers = {version = "^2.2.2", source = "pypi"}
+websockets = "^11.0.3"
+wsproto = "^1.2.0"
+gunicorn = "^21.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
