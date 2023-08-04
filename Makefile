@@ -3,7 +3,7 @@ include .env
 PROJECT_ID:=lucid-arch-387422
 APP_NAME:=gridoai_ml
 APP_NAME_WITH_HYPHEN:=gridoai-ml
-MEMORY:=8G
+MEMORY:=6000Mi
 CPU:=2
 
 run:
@@ -19,7 +19,8 @@ build:
 gcloud-build:
 	poetry export --without-hashes --format=requirements.txt > requirements.txt
 	gcloud builds submit --region=us-west2 \
-	--tag us-west2-docker.pkg.dev/$(PROJECT_ID)/docker-repo/$(APP_NAME)
+	--tag us-west2-docker.pkg.dev/$(PROJECT_ID)/docker-repo/$(APP_NAME) \
+	--verbosity=debug
 
 gcloud-run:
 	gcloud run deploy dev-$(APP_NAME_WITH_HYPHEN)-br \
