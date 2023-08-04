@@ -9,6 +9,7 @@ def test_embeddding() -> None:
         f"{HOST}/embed",
         json={
             "texts": ["cats are better than people"],
+            "instruction": "query",
             "model": "multilingual-e5-base",
         },
     )

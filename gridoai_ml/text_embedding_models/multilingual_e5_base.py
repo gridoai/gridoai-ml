@@ -7,7 +7,7 @@ import numpy as np
 class MultilingualE5BaseModel(AbsTextEmbeddingModel):
     def __init__(self) -> None:
         self.model = SentenceTransformer("intfloat/multilingual-e5-base")
-        self.instruction = "Represent the document:"
+        self.instruction = "query"
 
     @property
     def dim(self) -> int:
