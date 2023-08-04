@@ -13,4 +13,4 @@ ENV SENTENCE_TRANSFORMERS_HOME ./.cache/
 RUN pip install --no-cache-dir -r requirements.txt
 
 # As an example here we're running the web service with one worker on uvicorn.
-CMD exec uvicorn gridoai_ml.app:app --host 0.0.0.0 --port ${PORT} --workers 1
+CMD exec gunicorn gridoai_ml.app:app -b 0.0.0.0:${PORT} --workers 1 --timeout 300 --log-level=debug --preload --worker-class=uvicorn.workers.UvicornWorker
