@@ -27,6 +27,8 @@ sentence-transformers = {version = "^2.2.2", source = "pypi"}
 websockets = "^11.0.3"
 wsproto = "^1.2.0"
 gunicorn = "^21.2.0"
+openai = "^0.27.10"
+outlines = "^0.0.8"
 
 
 [tool.poetry.group.dev.dependencies]
