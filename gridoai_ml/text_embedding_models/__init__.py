@@ -1,7 +1,7 @@
 from gridoai_ml.text_embedding_models.abs_model import AbsTextEmbeddingModel
-from gridoai_ml.text_embedding_models.doc2vec import Doc2Vec
+# from gridoai_ml.text_embedding_models.doc2vec import Doc2Vec
 from gridoai_ml.text_embedding_models.mocked import MockedModel
-from gridoai_ml.text_embedding_models.instructor import InstructorModel
+# from gridoai_ml.text_embedding_models.instructor import InstructorModel
 from gridoai_ml.text_embedding_models.multilingual_e5_base import (
     MultilingualE5BaseModel,
 )
@@ -10,8 +10,8 @@ import typing as t
 
 MODELS: t.Dict[str, t.Type[AbsTextEmbeddingModel]] = {
     "mocked": MockedModel,
-    "doc2vec": Doc2Vec,
-    "instructor": InstructorModel,
+    # "doc2vec": Doc2Vec,
+    # "instructor": InstructorModel,
     "multilingual-e5-base": MultilingualE5BaseModel,
 }
 
