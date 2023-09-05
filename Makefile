@@ -7,7 +7,7 @@ MEMORY:=6000Mi
 CPU:=2
 
 run:
-	@poetry run uvicorn $(APP_NAME).app:app --reload
+	@poetry run hypercorn gridoai_ml.app:app -b 127.0.0.1:8000 --workers 1 --log-level=debug --worker-class=asyncio
 
 test:
 	@poetry run pytest
