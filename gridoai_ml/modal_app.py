@@ -1,4 +1,4 @@
-from modal import Stub, web_endpoint, Secret, Image
+from modal import Stub, web_endpoint, Secret, Image, gpu
 from gridoai_ml.setup import setup_data
 from gridoai_ml.text_embedding_models import get_model
 from gridoai_ml.entities import EmbeddingPayload
@@ -16,6 +16,7 @@ image = Image.debian_slim().pip_install(
     {"SENTENCE_TRANSFORMERS_HOME":"./.cache/",
     "EMBEDDING_MODEL":"multilingual-e5-base"},
 ).run_function(download_model)
+
 stub = Stub(
     name="example-get-started",
     image=image,
@@ -24,7 +25,7 @@ stub = Stub(
 
 model = get_model(setup_data)
 
-@stub.function(secret=Secret.from_name("my-custom-secret"), gpu='t4', allow_concurrent_inputs=3, memory=1024)
+@stub.function(secret=Secret.from_name("my-custom-secret"), gpu=gpu.T4(count=1), allow_concurrent_inputs=3, memory=1024)
 @web_endpoint("POST")
 async def embed(payload: EmbeddingPayload):
 
