@@ -1,14 +1,13 @@
 from modal import Stub, web_endpoint, Secret, Image
-from modal.gpu import T4
-from gridoai_ml.entities import Document, EmbeddingPayload
+from gridoai_ml.setup import setup_data
+from gridoai_ml.text_embedding_models import get_model
+from gridoai_ml.entities import EmbeddingPayload
 
 
 def download_model():
-    from sentence_transformers import SentenceTransformer
     get_model(setup_data)
 
 image = Image.debian_slim().pip_install(
-    # scraping pkgs
     "python-dotenv~=1.0.0",
     "requests~=2.31.0",
     "numpy",
@@ -22,8 +21,7 @@ stub = Stub(
     image=image,
 )
 
-from gridoai_ml.setup import setup_data
-from gridoai_ml.text_embedding_models import get_model
+
 model = get_model(setup_data)
 
 @stub.function(secret=Secret.from_name("my-custom-secret"), gpu='t4', allow_concurrent_inputs=3, memory=1024)
@@ -34,6 +32,6 @@ async def embed(payload: EmbeddingPayload):
         return {"message": "model not available"}
     try:
         vecs = model.calc(payload.texts, payload.instruction)
-        return {"message": [vec.tolist() for vec in vecs]}
+        return {"message": vecs}
     except:
         return {"message": "error"}
