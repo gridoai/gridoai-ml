@@ -15,8 +15,9 @@ class InstructorModel(AbsTextEmbeddingModel):
 
     def calc(
         self, texts: t.List[str], instruction: t.Optional[str] = None
-    ) -> t.List[np.ndarray]:
+    ) -> t.List[t.List[float]]:
         embeddings = self.model.encode(
             [[instruction or self.instruction, text] for text in texts]
         )
-        return embeddings[0]
+        vecs = embeddings[0]
+        return [vec.tolist() for vec in vecs]
