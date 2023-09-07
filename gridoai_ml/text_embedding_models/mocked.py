@@ -15,4 +15,5 @@ class MockedModel(AbsTextEmbeddingModel):
     def calc(
         self, texts: t.List[str], instruction: t.Optional[str] = None
     ) -> t.List[np.ndarray]:
-        return [np.array(self.mocked_model[text]) for text in texts]
+        vecs = [np.array(self.mocked_model[text]) for text in texts]
+        return [vec.tolist() for vec in vecs]

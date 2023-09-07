@@ -15,10 +15,10 @@ class MultilingualE5BaseModel(AbsTextEmbeddingModel):
 
     def calc(
         self, texts: t.List[str], instruction: t.Optional[str] = None
-    ) -> t.List[np.ndarray]:
+    ) -> t.List[t.List[float]]:
         current_instruction = instruction or self.instruction
         embeddings = self.model.encode(
             [f"{current_instruction}: {text}" for text in texts],
             convert_to_numpy=False
         )
-        return embeddings
+        return [vec.tolist() for vec in embeddings]
