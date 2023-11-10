@@ -25,10 +25,10 @@ stub = Stub(
 
 model = get_model(setup_data)
 
-@stub.function(secret=Secret.from_name("my-custom-secret"), gpu=gpu.T4(count=1), allow_concurrent_inputs=3, memory=1024)
+@stub.function(secret=Secret.from_name("my-custom-secret"), gpu=gpu.T4(count=1), allow_concurrent_inputs=3, memory=1024, cpu=1)
 @web_endpoint("POST")
 async def embed(payload: EmbeddingPayload):
-
+    print("model", payload.model)
     if payload.model != setup_data.embedding_model:
         return {"message": "model not available"}
     try:
