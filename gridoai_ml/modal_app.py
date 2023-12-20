@@ -37,7 +37,7 @@ stub = Stub(
     memory=1024,
 )
 @web_endpoint(method="POST")
-async def embed_many(payload: EmbeddingPayload):
+async def embed_batch(payload: EmbeddingPayload):
     model = get_model(setup_data)
 
     if payload.model != setup_data.embedding_model:
