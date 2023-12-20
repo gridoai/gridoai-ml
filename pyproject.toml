@@ -25,7 +25,7 @@ websockets = "^11.0.3"
 wsproto = "^1.2.0"
 gunicorn = "^21.2.0"
 hypercorn = "^0.14.4"
-modal = "^0.51.3306"
+modal = "0.56.4353"
 
 
 [tool.poetry.group.dev.dependencies]
