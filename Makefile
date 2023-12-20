@@ -30,3 +30,9 @@ gcloud-run:
 	--platform managed \
 	--region southamerica-east1 \
 	--allow-unauthenticated
+
+modal-setup:
+	poetry run python -m modal setup
+
+modal-deploy:
+	poetry run python -m modal deploy gridoai_ml/modal_app.py
