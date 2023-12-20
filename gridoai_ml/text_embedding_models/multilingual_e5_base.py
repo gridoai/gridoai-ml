@@ -1,12 +1,17 @@
 from gridoai_ml.text_embedding_models.abs_model import AbsTextEmbeddingModel
 from sentence_transformers import SentenceTransformer
 import typing as t
-import numpy as np
+import torch
 
 
 class MultilingualE5BaseModel(AbsTextEmbeddingModel):
     def __init__(self) -> None:
-        self.model = SentenceTransformer("intfloat/multilingual-e5-base")
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        print(f"Device: {device}")
+        self.model = SentenceTransformer(
+            "intfloat/multilingual-e5-base",
+            device=device,
+        )
         self.instruction = "query"
 
     @property
@@ -19,6 +24,6 @@ class MultilingualE5BaseModel(AbsTextEmbeddingModel):
         current_instruction = instruction or self.instruction
         embeddings = self.model.encode(
             [f"{current_instruction}: {text}" for text in texts],
-            convert_to_numpy=False
+            convert_to_numpy=False,
         )
         return [vec.tolist() for vec in embeddings]
