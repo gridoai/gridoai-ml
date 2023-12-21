@@ -1,4 +1,4 @@
-from modal import Stub, web_endpoint, Image, gpu
+from modal import Stub, web_endpoint, Image, gpu, method
 from gridoai_ml.setup import setup_data
 from gridoai_ml.text_embedding_models import get_model
 from gridoai_ml.entities import EmbeddingPayload
@@ -44,7 +44,7 @@ class EmbedBatch:
             self.model = get_model(setup_data)
 
     @web_endpoint(method="POST")
-    async def embed_batch(self, payload: EmbeddingPayload):
+    def embed(self, payload: EmbeddingPayload):
         if payload.model != setup_data.embedding_model:
             return {"message": "model not available"}
         try:
@@ -66,7 +66,7 @@ class EmbedSingle:
             self.model = get_model(setup_data)
 
     @web_endpoint(method="POST")
-    async def embed_single(self, payload: EmbeddingPayload):
+    def embed(self, payload: EmbeddingPayload):
         if payload.model != setup_data.embedding_model:
             return {"message": "model not available"}
         try:
