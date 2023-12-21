@@ -32,35 +32,45 @@ stub = Stub(
 )
 
 
-@stub.function(
+@stub.cls(
     gpu=gpu.T4(count=1),
     memory=1024,
+    checkpointing_enabled=True,
+    container_idle_timeout=60 * 2,
 )
-@web_endpoint(method="POST")
-async def embed_batch(payload: EmbeddingPayload):
-    model = get_model(setup_data)
+class EmbedBatch:
+    def __enter__(self) -> None:
+        with stub.image.imports():
+            self.model = get_model(setup_data)
 
-    if payload.model != setup_data.embedding_model:
-        return {"message": "model not available"}
-    try:
-        vecs = model.calc(payload.texts, payload.instruction)
-        return {"message": vecs}
-    except:
-        return {"message": "error"}
+    @web_endpoint(method="POST")
+    async def embed_batch(self, payload: EmbeddingPayload):
+        if payload.model != setup_data.embedding_model:
+            return {"message": "model not available"}
+        try:
+            vecs = self.model.calc(payload.texts, payload.instruction)
+            return {"message": vecs}
+        except:
+            return {"message": "error"}
 
 
-@stub.function(
-    allow_concurrent_inputs=3,
+@stub.cls(
+    allow_concurrent_inputs=10,
+    container_idle_timeout=60 * 5,
+    checkpointing_enabled=True,
     memory=1024,
 )
-@web_endpoint(method="POST")
-async def embed_single(payload: EmbeddingPayload):
-    model = get_model(setup_data)
+class EmbedSingle:
+    def __enter__(self) -> None:
+        with stub.image.imports():
+            self.model = get_model(setup_data)
 
-    if payload.model != setup_data.embedding_model:
-        return {"message": "model not available"}
-    try:
-        vecs = model.calc(payload.texts, payload.instruction)
-        return {"message": vecs}
-    except:
-        return {"message": "error"}
+    @web_endpoint(method="POST")
+    async def embed_single(self, payload: EmbeddingPayload):
+        if payload.model != setup_data.embedding_model:
+            return {"message": "model not available"}
+        try:
+            vecs = self.model.calc(payload.texts, payload.instruction)
+            return {"message": vecs}
+        except:
+            return {"message": "error"}

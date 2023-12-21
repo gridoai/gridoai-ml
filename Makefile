@@ -36,3 +36,6 @@ modal-setup:
 
 modal-deploy:
 	poetry run python -m modal deploy gridoai_ml/modal_app.py
+
+modal-serve:
+	poetry run python -m modal serve gridoai_ml/modal_app.py
