@@ -1,4 +1,4 @@
-from modal import Stub, web_endpoint, Image, gpu, method
+from modal import Stub, web_endpoint, Image, gpu
 from gridoai_ml.setup import setup_data
 from gridoai_ml.text_embedding_models import get_model
 from gridoai_ml.entities import EmbeddingPayload
