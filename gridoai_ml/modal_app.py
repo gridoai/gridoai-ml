@@ -35,13 +35,11 @@ stub = Stub(
 @stub.cls(
     gpu=gpu.T4(count=1),
     memory=1024,
-    checkpointing_enabled=True,
     container_idle_timeout=60 * 2,
 )
 class EmbedBatch:
     def __enter__(self) -> None:
-        with stub.image.imports():
-            self.model = get_model(setup_data)
+        self.model = get_model(setup_data)
 
     @web_endpoint(method="POST")
     def embed(self, payload: EmbeddingPayload):
@@ -56,14 +54,12 @@ class EmbedBatch:
 
 @stub.cls(
     allow_concurrent_inputs=10,
-    container_idle_timeout=60 * 5,
-    checkpointing_enabled=True,
+    container_idle_timeout=60 * 10,
     memory=1024,
 )
 class EmbedSingle:
     def __enter__(self) -> None:
-        with stub.image.imports():
-            self.model = get_model(setup_data)
+        self.model = get_model(setup_data)
 
     @web_endpoint(method="POST")
     def embed(self, payload: EmbeddingPayload):
