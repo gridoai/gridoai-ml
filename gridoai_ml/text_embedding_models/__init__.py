@@ -9,6 +9,9 @@ def get_model(setup_data: SetupData) -> AbsTextEmbeddingModel:
         case "multilingual-e5-base":
             from gridoai_ml.text_embedding_models.multilingual_e5_base import MultilingualE5BaseModel
             return MultilingualE5BaseModel()
+        case "multilingual-e5-base-onnx":
+            from gridoai_ml.text_embedding_models.multilingual_e5_base_onnx import OnnxRuntimeTextEmbeddingModel
+            return OnnxRuntimeTextEmbeddingModel()
         case "doc2vec":
             from gridoai_ml.text_embedding_models.doc2vec import Doc2Vec
             return Doc2Vec()
