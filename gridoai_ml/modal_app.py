@@ -16,6 +16,9 @@ image = (
         "numpy",
         "sentence_transformers",
         "torch",
+        "transformers",
+        "huggingface-hub",
+        "onnxruntime"
     )
     .env(
         {
