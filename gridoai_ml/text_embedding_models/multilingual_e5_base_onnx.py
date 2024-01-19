@@ -36,15 +36,21 @@ def average_pool(
 class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
     def __init__(self) -> None:
         repo_id = "intfloat/multilingual-e5-base"
-        files = ["onnx/model.onnx", "onnx/tokenizer.json", "onnx/tokenizer_config.json"]
+        files = [
+            "onnx/model.onnx",
+            "onnx/tokenizer.json",
+            "onnx/tokenizer_config.json",
+            "onnx/special_tokens_map.json",
+        ]
         destination_dir = "./onnx/multilingual-e5-base/"
+        check_and_download_hf_files(repo_id, files, destination_dir)
+
         with open(destination_dir + "special_tokens_map.json", "r") as f:
             special_tokens_map = json.load(f)
         for key, value in special_tokens_map.items():
             if isinstance(value, dict):
                 special_tokens_map[key] = value["content"]
 
-        check_and_download_hf_files(repo_id, files, destination_dir)
         self.tokenizer = PreTrainedTokenizerFast(
             tokenizer_file=destination_dir + "tokenizer.json",
             tokenizer_config=destination_dir + "tokenizer_config.json",
@@ -53,7 +59,9 @@ class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
         so = ort.SessionOptions()
         so.graph_optimization_level = ort.GraphOptimizationLevel.ORT_ENABLE_ALL
         self.ort_sess = ort.InferenceSession(
-            destination_dir + "model.onnx", sess_options=so
+            destination_dir + "model.onnx",
+            sess_options=so,
+            providers=["CPUExecutionProvider", "CUDAExecutionProvider"],
         )
 
     @property
@@ -63,6 +71,7 @@ class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
     def calc(
         self, texts: t.List[str], instruction: t.Optional[str] = None
     ) -> t.List[t.List[float]]:
+        print(f"Calculating embeddings for {len(texts)} texts in onnx")
         if instruction:
             texts = [f"{instruction}: {text}" for text in texts]
         results = []
