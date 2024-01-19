@@ -58,6 +58,7 @@ async def embed(payload: EmbeddingPayload):
         return {"message": "model not available"}
     try:
         vecs = model.calc(payload.texts, payload.instruction)
-        return {"message": [vec.tolist() for vec in vecs]}
-    except:
+        return {"message": vecs}
+    except Exception as e:
+        print("failed to calculate embedding:", e)
         return {"message": "error"}
