@@ -12,7 +12,6 @@ class MultilingualE5BaseModel(AbsTextEmbeddingModel):
             "intfloat/multilingual-e5-base",
             device=device,
         )
-        self.instruction = "query"
 
     @property
     def dim(self) -> int:
@@ -21,9 +20,7 @@ class MultilingualE5BaseModel(AbsTextEmbeddingModel):
     def calc(
         self, texts: t.List[str], instruction: t.Optional[str] = None
     ) -> t.List[t.List[float]]:
-        current_instruction = instruction or self.instruction
-        embeddings = self.model.encode(
-            [f"{current_instruction}: {text}" for text in texts],
-            convert_to_numpy=False,
-        )
+        if instruction:
+            texts = [f"{instruction}: {text}" for text in texts]
+        embeddings = self.model.encode(texts, convert_to_numpy=False)
         return [vec.tolist() for vec in embeddings]

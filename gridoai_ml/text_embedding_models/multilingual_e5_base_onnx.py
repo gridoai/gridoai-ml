@@ -3,14 +3,9 @@ import typing as t
 from transformers import PreTrainedTokenizerFast
 import onnxruntime as ort
 from gridoai_ml.utils import check_and_download_hf_files
-from transformers import AutoTokenizer
 import json
-import torch.nn.functional as F
 
 import numpy as np
-from torch import Tensor
-
-import torch
 
 
 def average_pool(
@@ -90,7 +85,7 @@ class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
                     "attention_mask": batch_dict["attention_mask"],
                 },
             )[0]
-            embeddings = average_pool((last_hidden_state), batch_dict["attention_mask"])
+            embeddings = average_pool(last_hidden_state, batch_dict["attention_mask"])
 
             results.append(embeddings[0].tolist())
         return results

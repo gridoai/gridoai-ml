@@ -18,12 +18,12 @@ image = (
         "torch",
         "transformers",
         "huggingface-hub",
-        "onnxruntime"
+        "onnxruntime",
     )
     .env(
         {
             "SENTENCE_TRANSFORMERS_HOME": "./.cache/",
-            "EMBEDDING_MODEL": "multilingual-e5-base",
+            "EMBEDDING_MODEL": "multilingual-e5-base-onnx",
         },
     )
     .run_function(download_model)
@@ -57,7 +57,7 @@ class EmbedBatch:
 
 @stub.cls(
     allow_concurrent_inputs=10,
-    container_idle_timeout=60 * 10,
+    container_idle_timeout=60 * 11,
     memory=1024,
 )
 class EmbedSingle:
