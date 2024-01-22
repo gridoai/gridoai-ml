@@ -1,7 +1,7 @@
 #!/bin/bash
 
 lock_file="/tmp/ml_warmup.lock"
-timezone=${TZ:-"GMT-3"}
+timezone=${TZ:-"GMT+3"}
 
 if [ -e "$lock_file" ]; then
     echo "Script is already running. Exiting."
@@ -21,13 +21,12 @@ touch "$lock_file"
 
 while true; do
     current_hour=$(TZ="$timezone" date +%H)
-
+    echo "Current hour: $current_hour"
     if ((current_hour >= 9 && current_hour < 17)); then
         echo "Executing command..."
         curl -s $EMBEDDING_API_ENDPOINT_SINGLE
-        break # Break out of the loop after executing the command once during business hours
     else
         echo "Outside of business hours. Checking again in 10 minutes..."
-        sleep 600 # Wait for 10 minutes before checking again
     fi
+    sleep 600 # Wait for 10 minutes before checking again
 done
