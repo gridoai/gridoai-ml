@@ -23,7 +23,7 @@ image = (
     .env(
         {
             "SENTENCE_TRANSFORMERS_HOME": "./.cache/",
-            "EMBEDDING_MODEL": "multilingual-e5-base-onnx",
+            "EMBEDDING_MODEL": "multilingual-e5-base",
         },
     )
     .run_function(download_model)
@@ -51,8 +51,8 @@ class EmbedBatch:
         try:
             vecs = self.model.calc(payload.texts, payload.instruction)
             return {"message": vecs}
-        except:
-            return {"message": "error"}
+        except Exception as e:
+            return {"message": f"error: {e}"}
 
 
 @stub.cls(
@@ -71,5 +71,5 @@ class EmbedSingle:
         try:
             vecs = self.model.calc(payload.texts, payload.instruction)
             return {"message": vecs}
-        except:
-            return {"message": "error"}
+        except Exception as e:
+            return {"message": f"error: {e}"}
