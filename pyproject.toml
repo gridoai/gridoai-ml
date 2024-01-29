@@ -27,7 +27,7 @@ gunicorn = "^21.2.0"
 hypercorn = "^0.14.4"
 modal = "^0.56.4547"
 huggingface-hub = "^0.20.2"
-onnxruntime = "^1.16.3"
+onnxruntime-gpu = "1.16.0"
 
 
 [tool.poetry.group.dev.dependencies]
