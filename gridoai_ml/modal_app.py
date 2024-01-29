@@ -9,16 +9,21 @@ def download_model():
 
 
 image = (
-    Image.debian_slim()
+    Image.from_registry(
+        "nvidia/cuda:11.6.1-cudnn8-runtime-ubuntu20.04", add_python="3.10"
+    )
+    .pip_install(
+        "torch",
+        "torchvision",
+        "torchaudio",
+        index_url="https://download.pytorch.org/whl/cu116",
+    )
     .pip_install(
         "python-dotenv~=1.0.0",
         "requests~=2.31.0",
-        "numpy",
-        "sentence_transformers",
-        "torch",
         "transformers",
         "huggingface-hub",
-        "onnxruntime",
+        "onnxruntime-gpu==1.14.1",
     )
     .env(
         {
@@ -51,8 +56,8 @@ class EmbedBatch:
         try:
             vecs = self.model.calc(payload.texts, payload.instruction)
             return {"message": vecs}
-        except:
-            return {"message": "error"}
+        except Exception as e:
+            return {"message": f"error: {e}"}
 
 
 @stub.cls(
@@ -71,5 +76,5 @@ class EmbedSingle:
         try:
             vecs = self.model.calc(payload.texts, payload.instruction)
             return {"message": vecs}
-        except:
-            return {"message": "error"}
+        except Exception as e:
+            return {"message": f"error: {e}"}

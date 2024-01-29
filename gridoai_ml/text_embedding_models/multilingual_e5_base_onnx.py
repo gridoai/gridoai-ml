@@ -1,10 +1,10 @@
 from gridoai_ml.text_embedding_models.abs_model import AbsTextEmbeddingModel
-import typing as t
-from transformers import PreTrainedTokenizerFast
-import onnxruntime as ort
 from gridoai_ml.utils import check_and_download_hf_files
+import typing as t
+import onnxruntime as ort
+from transformers import PreTrainedTokenizerFast
 import json
-
+import torch
 import numpy as np
 
 
@@ -30,6 +30,7 @@ def average_pool(
 
 class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
     def __init__(self) -> None:
+        print(f"CUDA version: {torch.version.cuda}")
         repo_id = "intfloat/multilingual-e5-base"
         files = [
             "onnx/model.onnx",
@@ -56,7 +57,7 @@ class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
         self.ort_sess = ort.InferenceSession(
             destination_dir + "model.onnx",
             sess_options=so,
-            providers=["CPUExecutionProvider", "CUDAExecutionProvider"],
+            providers=["CUDAExecutionProvider"],
         )
 
     @property
@@ -66,26 +67,21 @@ class OnnxRuntimeTextEmbeddingModel(AbsTextEmbeddingModel):
     def calc(
         self, texts: t.List[str], instruction: t.Optional[str] = None
     ) -> t.List[t.List[float]]:
-        print(f"Calculating embeddings for {len(texts)} texts in onnx")
         if instruction:
             texts = [f"{instruction}: {text}" for text in texts]
-        results = []
-        for text in texts:
-            batch_dict = self.tokenizer(
-                [text],
-                max_length=512,
-                padding=True,
-                truncation=True,
-                return_tensors="np",
-            )
-            last_hidden_state = self.ort_sess.run(
-                None,
-                {
-                    "input_ids": batch_dict["input_ids"],
-                    "attention_mask": batch_dict["attention_mask"],
-                },
-            )[0]
-            embeddings = average_pool(last_hidden_state, batch_dict["attention_mask"])
-
-            results.append(embeddings[0].tolist())
-        return results
+        batch_dict = self.tokenizer(
+            texts,
+            max_length=512,
+            padding=True,
+            truncation=True,
+            return_tensors="np",
+        )
+        last_hidden_state = self.ort_sess.run(
+            None,
+            {
+                "input_ids": batch_dict["input_ids"],
+                "attention_mask": batch_dict["attention_mask"],
+            },
+        )
+        embeddings = average_pool(last_hidden_state, batch_dict["attention_mask"])
+        return [vec.tolist() for vec in embeddings.tolist()]
